@@ -1,12 +1,12 @@
 import React from 'react';
+import { Grid } from '@material-ui/core';
 import logo from './logo.svg';
 import './App.css';
-import MarkdownViewer from './MarkdownViewer'
+import MarkdownEditor from './MarkdownEditor';
 
 function App() {
   let content = 
-`
-# 샘플 문제 지문
+`# 샘플 문제 지문
 
 Prove that a union of any two countably infinite sets is countably infinite.
 
@@ -47,7 +47,9 @@ countably infinite한 두 집합을 $A$, $B$라고 하자. 이제 아래 과정�
 `;
 
   return (
-    <MarkdownViewer className="viewer" source={content}/>
+    <Grid container direction="column" className="app_root">
+      <MarkdownEditor className="editor" contents={content}></MarkdownEditor>
+    </Grid>
   );
 }
 
