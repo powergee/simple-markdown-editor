@@ -41,6 +41,7 @@ const MarkdownEditor = (props) => {
             <Grid container direction="row">
                 <div className="editor_input_container">
                     <Typography variant="caption">Markdown 및 LaTeX 형식</Typography>
+                    <Divider className="editor_caption_divider" orientation="horizontal"></Divider>
                     <FilledInput
                         className="editor_input"
                         inputProps={{ 
@@ -61,6 +62,7 @@ const MarkdownEditor = (props) => {
                 <Divider className="editor_divider" orientation="vertical" flexItem></Divider>
                 <div className="editor_viewer_container">
                     <Typography variant="caption">미리 보기</Typography>
+                    <Divider className="editor_caption_divider" orientation="horizontal"></Divider>
                     <MarkdownViewer source={source}/>
                 </div>
             </Grid>
