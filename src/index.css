@@ -13,18 +13,24 @@ code {
 }
 
 .editor_root {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
 }
 
-.editor_input_form {
-  width: 48%;
-  margin-right: 1%;
+.editor_input_container {
+  width: 48% !important;
+  margin-right: 1% !important;;
 }
 
-.editor_viewer {
-  width: 48%;
-  margin-left: 1%;
+.editor_input {
+  width: 100%;
+  align-items: flex-start;
+  overflow-wrap: break-word;
+}
+
+.editor_viewer_container {
+  width: 48% !important;;
+  margin-left: 1% !important;;
 }
 
 .app_root {

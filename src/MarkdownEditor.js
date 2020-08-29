@@ -1,47 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Grid, FormControl, InputLabel, Divider, TextField, FilledInput } from '@material-ui/core';
+import { Paper, Grid, Typography, Divider, TextField, FilledInput } from '@material-ui/core';
 import MarkdownViewer from './MarkdownViewer';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-    input: {
-        height: '100%',
-        alignItems: 'flex-start'
-    }
-})
 
 const MarkdownEditor = (props) => {
+    const [text, setText] = useState(undefined);
     const [source, setSource] = useState(undefined);
-    const classes = useStyles();
+    const [updating, setUpdating] = useState(undefined);
 
     useEffect(() => {
+        setText(props.contents === undefined ? "" : props.contents);
         setSource(props.contents === undefined ? "" : props.contents);
     }, [props.contents]);
 
+    function setSourceAfterDelay(value) {
+        if (updating)
+            clearTimeout(updating);
+        
+        // TODO: 퍼포먼스 이슈가 있을 때 대기 시간을 추가할 것.
+        setUpdating(setTimeout(() => {
+            setSource(value);
+            console.log("updated");
+        }, 0));
+    }
+
     function handleTextChange(event) {
-        setSource(event.target.value);
+        setText(event.target.value);
+        setSourceAfterDelay(event.target.value);
+    }
+
+    function handleTabDown(event) {
+        if (event.keyCode === 9) {
+            setText(event.target.value+'\t');
+            setSourceAfterDelay(event.target.value+'\t');
+            event.preventDefault();
+        }
     }
 
     return (
         <Paper component="form" className="editor_root">
             <Grid container direction="row">
-                <FormControl variant="filled" className="editor_input_form">
-                    <InputLabel htmlFor="component-filled">Markdown / LaTeX</InputLabel>
+                <div className="editor_input_container">
+                    <Typography variant="caption">Markdown 및 LaTeX 형식</Typography>
                     <FilledInput
                         className="editor_input"
-                        classes={{
-                            root: classes.input
+                        inputProps={{ 
+                            'aria-label': 'Markdown / LaTeX',
+                            'autocomplete': "off",
+                            'autocorrect': "off", 
+                            'autocapitalize': "off",
+                            'spellcheck': "false"
                         }}
-                        inputProps={{ 'aria-label': 'Markdown / LaTeX', 'align-items': undefined }}
                         multiline
                         rows={1}
                         rowsMax={10000}
-                        value={source}
+                        value={text}
                         onChange={handleTextChange}
+                        onKeyDown={handleTabDown}
                     ></FilledInput>
-                </FormControl>
+                </div>
                 <Divider className="editor_divider" orientation="vertical" flexItem></Divider>
-                <MarkdownViewer className="editor_viewer" source={source} />
+                <div className="editor_viewer_container">
+                    <Typography variant="caption">미리 보기</Typography>
+                    <MarkdownViewer source={source}/>
+                </div>
             </Grid>
         </Paper>
     );
