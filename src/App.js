@@ -6,15 +6,20 @@ import MarkdownEditor from './MarkdownEditor';
 
 function App() {
   let content = 
-`# 샘플 문제 지문
+`
+# 1. LaTeX 테스트
+
+LaTeX로 입력한 수식이 다른 요소와 잘 섞여 출력되는지 테스트합니다.
+
+## 샘플 문제 지문
 
 Prove that a union of any two countably infinite sets is countably infinite.
 
-# 샘플 풀이 예시
+## 샘플 풀이 예시
 
 countably infinite한 두 집합을 $A$, $B$라고 하자. 이제 아래 과정을 따라 명제를 증명한다.
 
-## $A \\cap B = \\varnothing$일 때,
+### $A \\cap B = \\varnothing$일 때,
 
   집합 $A$와 $B$가 countably infinite하기 때문에 두개의 전단사 함수 $f:A\\rightarrow N$와 $g: B \\rightarrow N$가 존재한다. 이 때 함수 $h: A\\cup B \\rightarrow N$를 아래와 같이 정의하자.
 
@@ -37,13 +42,132 @@ countably infinite한 두 집합을 $A$, $B$라고 하자. 이제 아래 과정�
 
   이렇게 임의의 두 원소 $c, d \\in A \\cup B$에 대하여 $h(c)=h(d)$라고 가정하면 항상 $c=d$가 성립하므로 h는 one-to-one 함수이다. 따라서 $A\\cup B$는 countably infinite하다.
 
-## $A \\cap B \\not= \\varnothing$일 때,
+### $A \\cap B \\not= \\varnothing$일 때,
 
   이런 경우 $A \\cup B = (A-B) \\cup (A \\cap B) \\cup (B-A)$로 분리해서 생각하면 3개의 집합은 모두 disjoint하다. 이것들이 모두 무한 집합이라면 이전에 1번에서 증명한 내용을 두 번 적용하여 $A\\cup B$이 countably infinite하다는 것을 쉽게 합리화할 수 있다. 그리고 하나 이상이 유한 집합인 경우에는 countably infinite한 집합과 countably하지만 not infinite 한 집합을 합집합하면 countable의 정의에 의해 자명하게 countably infinite한 집합을 얻을 수 있으므로 이들을 고려하지 않고 무한한 집합만 생각하여 1번 증명을 적용하면 증명할 수 있다.
 
-# 이미지 삽입 테스트
+# 2. 헤더 테스트
+
+헤더가 정상적으로 출력되는지 테스트합니다.
+
+# This is a H1
+## This is a H2
+### This is a H3
+#### This is a H4
+##### This is a H5
+###### This is a H6
+
+# 3. BlockQuote 테스트
+
+\`\`\`>\`\`\` 문자를 이용한 인용이 정상적으로 출력되는지 테스트합니다.
+
+> This is a first blockqute.
+>> This is a second blockqute.
+>>> This is a third blockqute.
+
+> ### This is a H3
+> * List
+>> \`\`\`
+>>	code
+>> \`\`\`
+
+# 4. 목록 테스트
+
+목록이 정상적으로 출력되는지 테스트합니다.
+
+1. 첫번째
+2. 두번째
+3. 세번째
+
+* 빨강
+  * 녹색
+    * 파랑
+
++ 빨강
+  + 녹색
+    + 파랑
+
+- 빨강
+  - 녹색
+    - 파랑
+
+* 1단계
+  - 2단계
+    + 3단계
+      + 4단계
+
+# 5. 코드 테스트
+
+코드 블럭이 정상적으로 출력되는지 테스트합니다.
+
+This is a normal paragraph:
+
+    This is a code block.
+
+end code block.
+
+\`\`\`
+public class BootSpringBootApplication {
+  public static void main(String[] args) {
+    System.out.println("Hello, Honeymon");
+  }
+}
+\`\`\`
+
+# 6. 수평선 테스트
+
+수평선이 정상적으로 출력되는지 테스트합니다.
+
+* * *
+
+***
+
+*****
+
+- - -
+
+---------------------------------------
+
+# 7. 링크 테스트
+
+링크가 정상적으로 출력되는지 테스트합니다.
+
+Link: [Google][googlelink]
+
+[googlelink]: https://google.com "Go google"
+
+# 8. 강조 테스트
+
+강조가 정상적으로 출력되는지 테스트합니다.
+
+* *single asterisks*
+* _single underscores_
+* **double asterisks**
+* __double underscores__
+* ~~cancelline~~
+
+# 9. 이미지 삽입 테스트
+
+이미지가 정상적으로 출력되는지 테스트합니다.
 
 ![screensh](https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png)
+
+# 10. 표 테스트
+
+표가 정상적으로 출력되는지 테스트합니다.
+
+| Option | Description |
+| ------ | ----------- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+
+| Option | Description |
+| ------:| -----------:|
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+
 `;
 
   return (

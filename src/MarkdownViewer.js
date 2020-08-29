@@ -16,8 +16,30 @@ const MarkdownViewer = props => {
 
         renderers: {
             ...props.renderers,
-            math: ({value}) => <BlockMath>{value}</BlockMath>,
-            inlineMath: ({value}) => <InlineMath>{value}</InlineMath>
+            code: (props) => {
+                return (
+                    <pre style={{ background: '#ebebeb', padding: 5 }}>
+                        <code>
+                            {props.value}
+                        </code>
+                    </pre>);
+            },
+            tableCell: (props) => {
+                let style = {
+                    textAlign: props.align ? props.align : 'center',
+                    padding: 5
+                };
+
+                style.border = '1px solid #b5b5b5';
+                if (props.isHeader) {
+                    style.background = '#f2f2f2'   
+                }
+
+                return <td style={style}>{props.children}</td>
+            },
+            inlineCode: (props) => <code style={{ background: '#ebebeb' }}>{props.value}</code>,
+            math: (props) => <BlockMath>{props.value}</BlockMath>,
+            inlineMath: (props) => <InlineMath>{props.value}</InlineMath>
         }
     };
 
