@@ -18,24 +18,24 @@ class MarkDownWithLaTeXRules
         //console.log(latexRules);
 
         this.$rules.start.push({
-            token: "latex-block-start",
+            token: "keyword",
             regex: "\\$\\$",
             next: "latex-start"
         });
         this.$rules.start.push({
-            token: "latex-inline-start",
+            token: "keyword",
             regex: "\\$",
             next: "latex-start"
         });
         
         this.embedRules(latexRules, "latex-", [
             {
-                token: "latex-block-end",
+                token: "keyword",
                 regex: "\\$\\$",
                 next: "start"
             },
             {
-                token: "latex-block-end",
+                token: "keyword",
                 regex: "\\$",
                 next: "start"
             }
@@ -66,7 +66,7 @@ const MarkdownEditor = (props) => {
         const customMarkDown = new CustomMarkdownMode();
         let session = editorRef.current.editor.getSession();
         session.setMode(customMarkDown);
-        setInterval(updateSource, 1000);
+        setInterval(updateSource, 250);
     }, []);
 
     useEffect(() => {
