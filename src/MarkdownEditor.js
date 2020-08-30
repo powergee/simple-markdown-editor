@@ -1,69 +1,108 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, createRef, useReducer } from 'react';
 import { Paper, Grid, Typography, Divider, TextField, FilledInput } from '@material-ui/core';
 import MarkdownViewer from './MarkdownViewer';
+import AceEditor from 'react-ace';
+
+import "ace-builds/src-noconflict/mode-markdown";
+import "ace-builds/src-noconflict/mode-latex";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/ext-language_tools";
+
+class MarkDownWithLaTeXRules
+    extends window.ace.acequire("ace/mode/markdown_highlight_rules").MarkdownHighlightRules {
+    constructor() {
+        super();
+        //console.log(this.$rules)
+        let LatexHighlightRules = window.ace.acequire("ace/mode/latex_highlight_rules").LatexHighlightRules;
+        let latexRules = (new LatexHighlightRules()).getRules();
+        //console.log(latexRules);
+
+        this.$rules.start.push({
+            token: "latex-block-start",
+            regex: "\\$\\$",
+            next: "latex-start"
+        });
+        this.$rules.start.push({
+            token: "latex-inline-start",
+            regex: "\\$",
+            next: "latex-start"
+        });
+        
+        this.embedRules(latexRules, "latex-", [
+            {
+                token: "latex-block-end",
+                regex: "\\$\\$",
+                next: "start"
+            },
+            {
+                token: "latex-block-end",
+                regex: "\\$",
+                next: "start"
+            }
+        ]);
+
+    }
+}
+
+class CustomMarkdownMode
+    extends window.ace.acequire("ace/mode/markdown").Mode {
+    constructor() {
+        super();
+        this.HighlightRules = MarkDownWithLaTeXRules;
+    }
+}
 
 const MarkdownEditor = (props) => {
-    const [text, setText] = useState(undefined);
     const [source, setSource] = useState(undefined);
-    const [updating, setUpdating] = useState(undefined);
+    const editorRef = useRef();
+    const viewerRef = useRef();
+
+    function updateSource() {
+        let session = editorRef.current.editor.getSession();
+        setSource(session.getValue());
+    }
 
     useEffect(() => {
-        setText(props.contents === undefined ? "" : props.contents);
+        const customMarkDown = new CustomMarkdownMode();
+        let session = editorRef.current.editor.getSession();
+        session.setMode(customMarkDown);
+        setInterval(updateSource, 1000);
+    }, []);
+
+    useEffect(() => {
         setSource(props.contents === undefined ? "" : props.contents);
+        let session = editorRef.current.editor.getSession();
+        session.setValue(props.contents);
     }, [props.contents]);
-
-    function setSourceAfterDelay(value) {
-        if (updating)
-            clearTimeout(updating);
-        
-        // TODO: 퍼포먼스 이슈가 있을 때 대기 시간을 추가할 것.
-        setUpdating(setTimeout(() => {
-            setSource(value);
-            console.log("updated");
-        }, 0));
-    }
-
-    function handleTextChange(event) {
-        setText(event.target.value);
-        setSourceAfterDelay(event.target.value);
-    }
-
-    function handleTabDown(event) {
-        if (event.keyCode === 9) {
-            setText(event.target.value+'\t');
-            setSourceAfterDelay(event.target.value+'\t');
-            event.preventDefault();
-        }
-    }
 
     return (
         <Paper component="form" className="editor_root">
-            <Grid container direction="row">
+            <Grid container direction="row" justify="center">
                 <div className="editor_input_container">
                     <Typography variant="caption">Markdown 및 LaTeX 형식</Typography>
                     <Divider className="editor_caption_divider" orientation="horizontal"></Divider>
-                    <FilledInput
-                        className="editor_input"
-                        inputProps={{ 
-                            'aria-label': 'Markdown / LaTeX',
-                            'autocomplete': "off",
-                            'autocorrect': "off", 
-                            'autocapitalize': "off",
-                            'spellcheck': "false"
-                        }}
-                        multiline
-                        rows={1}
-                        rowsMax={10000}
-                        value={text}
-                        onChange={handleTextChange}
-                        onKeyDown={handleTabDown}
-                    ></FilledInput>
+                    <div className="editor_input">
+                        <AceEditor
+                            ref={editorRef}
+                            className="editor_input"
+                            mode="markdown"
+                            theme="textmate"
+                            fontSize={14}
+                            showPrintMargin={false}
+                            maxLines={Infinity}
+                            showGutter={true}
+                            highlightActiveLine={true}
+                            wrapEnabled={true}
+                        ></AceEditor>
+                    </div>
                 </div>
                 <Divider className="editor_divider" orientation="vertical" flexItem></Divider>
                 <div className="editor_viewer_container">
                     <Typography variant="caption">미리 보기</Typography>
                     <Divider className="editor_caption_divider" orientation="horizontal"></Divider>
-                    <MarkdownViewer source={source}/>
+                    <div ref={viewerRef} className="editor_viewer">
+                        <MarkdownViewer source={source} />
+                    </div>
                 </div>
             </Grid>
         </Paper>
