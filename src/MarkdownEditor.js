@@ -89,7 +89,8 @@ const MarkdownEditor = (props) => {
                             theme="textmate"
                             fontSize={14}
                             showPrintMargin={false}
-                            maxLines={Infinity}
+                            minLines={40}
+                            maxLines={40}
                             showGutter={true}
                             highlightActiveLine={true}
                             wrapEnabled={true}
@@ -101,7 +102,7 @@ const MarkdownEditor = (props) => {
                     <Typography variant="caption">미리 보기</Typography>
                     <Divider className="editor_caption_divider" orientation="horizontal"></Divider>
                     <div ref={viewerRef} className="editor_viewer">
-                        <MarkdownViewer source={source} />
+                        <MarkdownViewer source={source}/>
                     </div>
                 </div>
             </Grid>

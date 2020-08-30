@@ -15,7 +15,6 @@ code {
 .editor_root {
   padding: 0.5rem;
   display: flex;
-  height: 600px;
 }
 
 .editor_input_container {
@@ -41,7 +40,7 @@ code {
 
 .editor_viewer {
   overflow: auto;
-  height: 100%;
+  height: 560px;
 }
 
 .app_root {
