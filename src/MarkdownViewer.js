@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import RemarkMathPlugin from 'remark-math';
 import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
+import emoji from 'emoji-dictionary';
 
 const MarkdownViewer = props => {
     const newProps = {
@@ -13,7 +14,7 @@ const MarkdownViewer = props => {
         ],
 
         renderers: {
-            text: (props) => (props.value),
+            text: (props) => props.value.replace(/:[^:\s]*(?:::[^:\s]*)*:/gi, name => emoji.getUnicode(name)),
             blockquote: (props) => (
                 <blockquote className="markdown_blockquote">
                     {props.children}

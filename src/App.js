@@ -3,10 +3,13 @@ import { Grid } from '@material-ui/core';
 import logo from './logo.svg';
 import './App.css';
 import MarkdownEditor from './MarkdownEditor';
+import emoji from 'emoji-dictionary';
 
 function App() {
   let content = 
 `
+# 0. Emoji 테스트 :smile: :sunglasses: :+1:
+
 # 1. LaTeX 테스트
 
 LaTeX로 입력한 수식이 다른 요소와 잘 섞여 출력되는지 테스트합니다.
