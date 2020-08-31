@@ -40,7 +40,30 @@ code {
 
 .editor_viewer {
   overflow: auto;
-  height: 560px;
+  height: 700px;
+}
+
+.markdown_blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+.markdown_table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown_pre {
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.markdown_inline_code {
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 4px;
 }
 
 .app_root {

@@ -89,8 +89,8 @@ const MarkdownEditor = (props) => {
                             theme="textmate"
                             fontSize={14}
                             showPrintMargin={false}
-                            minLines={40}
-                            maxLines={40}
+                            minLines={50}
+                            maxLines={50}
                             showGutter={true}
                             highlightActiveLine={true}
                             wrapEnabled={true}
