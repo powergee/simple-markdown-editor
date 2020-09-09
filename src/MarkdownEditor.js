@@ -72,7 +72,7 @@ const MarkdownEditor = (props) => {
     useEffect(() => {
         setSource(props.contents === undefined ? "" : props.contents);
         let session = editorRef.current.editor.getSession();
-        session.setValue(props.contents);
+        session.setValue(props.contents === undefined ? "" : props.contents);
     }, [props.contents]);
 
     return (
