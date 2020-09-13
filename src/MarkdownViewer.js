@@ -15,6 +15,15 @@ const MarkdownViewer = props => {
 
         renderers: {
             text: (props) => props.value.replace(/:[^:\s]*(?:::[^:\s]*)*:/gi, name => emoji.getUnicode(name)),
+            break: (props) => <br></br>,
+            paragraph: (props) => <p className="markdown_paragraph">{props.children}</p>,
+            emphasis: (props) => <em className="markdown_emphasis">{props.children}</em>,
+            link: (props) => <a className="markdown_link" href={props.href}>{props.children}</a>,
+            linkReference: (props) => <a className="markdown_link" href={props.href}>{props.children}</a>,
+            strong: (props) => <strong className="markdown_strong">{props.children}</strong>,
+            delete: (props) => <del>{props.children}</del>,
+            list: (props) => props.start ? <ol className="markdown_ol">{props.children}</ol> : <ul className="markdown_ul">{props.children}</ul>,
+            listItem: (props) => <li className="markdown_list_item">{props.children}</li>,
             blockquote: (props) => (
                 <blockquote className="markdown_blockquote">
                     {props.children}
@@ -48,7 +57,7 @@ const MarkdownViewer = props => {
     };
 
     return (
-        <ReactMarkdown {...props} {...newProps}></ReactMarkdown>
+        <ReactMarkdown className="markdown_viewer" {...props} {...newProps}></ReactMarkdown>
     );
 };
 

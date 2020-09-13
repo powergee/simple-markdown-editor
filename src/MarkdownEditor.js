@@ -54,19 +54,25 @@ class CustomMarkdownMode
 
 const MarkdownEditor = (props) => {
     const [source, setSource] = useState(undefined);
+    const [timer, setTimer] = useState(undefined);
+    const editorDivRef = useRef();
     const editorRef = useRef();
     const viewerRef = useRef();
 
     function updateSource() {
-        let session = editorRef.current.editor.getSession();
-        setSource(session.getValue());
+        if (editorRef.current) {
+            let session = editorRef.current.editor.getSession();
+            setSource(session.getValue());
+        } else clearInterval(timer);
     }
 
     useEffect(() => {
         const customMarkDown = new CustomMarkdownMode();
         let session = editorRef.current.editor.getSession();
         session.setMode(customMarkDown);
-        setInterval(updateSource, 250);
+        console.log(viewerRef.current.style);
+        viewerRef.current.style.height = `${editorDivRef.current.offsetHeight}px`;
+        setTimer(setInterval(updateSource, 250));
     }, []);
 
     useEffect(() => {
@@ -75,25 +81,31 @@ const MarkdownEditor = (props) => {
         session.setValue(props.contents === undefined ? "" : props.contents);
     }, [props.contents]);
 
+    function handleTextChange(value) {
+        if (props.onChange)
+            props.onChange(value);
+    }
+
     return (
         <Paper component="form" className="editor_root">
             <Grid container direction="row" justify="center">
                 <div className="editor_input_container">
                     <Typography variant="caption">Markdown 및 LaTeX 형식</Typography>
                     <Divider className="editor_caption_divider" orientation="horizontal"></Divider>
-                    <div className="editor_input">
+                    <div className="editor_input" ref={editorDivRef}>
                         <AceEditor
                             ref={editorRef}
                             className="editor_input"
                             mode="markdown"
                             theme="textmate"
-                            fontSize={14}
+                            fontSize={18}
                             showPrintMargin={false}
-                            minLines={50}
-                            maxLines={50}
+                            minLines={35}
+                            maxLines={35}
                             showGutter={true}
                             highlightActiveLine={true}
                             wrapEnabled={true}
+                            onChange={handleTextChange}
                         ></AceEditor>
                     </div>
                 </div>
