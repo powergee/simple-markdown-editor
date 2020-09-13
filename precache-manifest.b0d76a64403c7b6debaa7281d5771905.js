@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dc999470e857880b2329ad6bb233686b",
+    "revision": "4b114c7c9ad33e1e46f2cffe1cdd7fb1",
     "url": "/simple-markdown-editor/index.html"
   },
   {
-    "revision": "d7b940a7161801249999",
+    "revision": "35fb4ff4c10aa99733c7",
     "url": "/simple-markdown-editor/static/css/2.c0d21de3.chunk.css"
   },
   {
-    "revision": "0bdbf85a87fa0982d982",
-    "url": "/simple-markdown-editor/static/css/main.35d44b42.chunk.css"
+    "revision": "be2136cdbf3040e42fba",
+    "url": "/simple-markdown-editor/static/css/main.4de35603.chunk.css"
   },
   {
-    "revision": "d7b940a7161801249999",
-    "url": "/simple-markdown-editor/static/js/2.8eea31fe.chunk.js"
+    "revision": "35fb4ff4c10aa99733c7",
+    "url": "/simple-markdown-editor/static/js/2.6cab4b80.chunk.js"
   },
   {
     "revision": "ddb75ba79580b40582febba384f2618b",
-    "url": "/simple-markdown-editor/static/js/2.8eea31fe.chunk.js.LICENSE.txt"
+    "url": "/simple-markdown-editor/static/js/2.6cab4b80.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0bdbf85a87fa0982d982",
-    "url": "/simple-markdown-editor/static/js/main.9ebef629.chunk.js"
+    "revision": "be2136cdbf3040e42fba",
+    "url": "/simple-markdown-editor/static/js/main.2c168aa7.chunk.js"
   },
   {
     "revision": "c1ee165f0dd55c8ecfa7",
