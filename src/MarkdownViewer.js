@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import RemarkMathPlugin from 'remark-math';
 import { BlockMath, InlineMath } from 'react-katex';
+import { Paper, Table, TableRow, TableHead, TableCell, TableBody, TableContainer } from '@material-ui/core';
 import 'katex/dist/katex.min.css';
 import emoji from 'emoji-dictionary';
+
+const OutlinedPaper = props => {
+    return (<Paper variant="outlined">{props.children}</Paper>);
+}
 
 const MarkdownViewer = props => {
     const newProps = {
@@ -34,21 +39,36 @@ const MarkdownViewer = props => {
                         {props.value}
                     </code>
                 </pre>),
+            // table: (props) => (
+            //     <table className="markdown_table">{props.children}</table>
+            // ),
+            // tableCell: (props) => {
+            //     let style = {
+            //         textAlign: props.align ? props.align : 'center',
+            //         padding: "6px 13px"
+            //     };
+
+            //     style.border = '1px solid #dfe2e5';
+            //     if (props.isHeader) {
+            //         style.background = '#f2f2f2'   
+            //     }
+
+            //     return <td style={style}>{props.children}</td>
+            // },
             table: (props) => (
-                <table className="markdown_table">{props.children}</table>
+                <TableContainer className="markdown_table_container" component={OutlinedPaper}>
+                    <Table>
+                        {props.children}
+                    </Table>
+                </TableContainer>
             ),
+            tableHead: (props) => <TableHead>{props.children}</TableHead>,
+            tableBody: (props) => <TableBody>{props.children}</TableBody>,
+            tableRow: (props) => <TableRow>{props.children}</TableRow>,
             tableCell: (props) => {
-                let style = {
-                    textAlign: props.align ? props.align : 'center',
-                    padding: "6px 13px"
-                };
-
-                style.border = '1px solid #dfe2e5';
-                if (props.isHeader) {
-                    style.background = '#f2f2f2'   
-                }
-
-                return <td style={style}>{props.children}</td>
+                let className = props.isHeader ? "markdown_header_cell" : "markdown_body_cell";
+                let align = props.align ? props.align : "center";
+                return <TableCell className={className} align={align}>{props.children}</TableCell>
             },
             inlineCode: (props) => <code className="markdown_inline_code">{props.value}</code>,
             math: (props) => <BlockMath>{props.value}</BlockMath>,

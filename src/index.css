@@ -107,9 +107,17 @@ code {
   border-left: .25em solid #dfe2e5;
 }
 
-.markdown_table {
+/* .markdown_table {
   border-spacing: 0;
   border-collapse: collapse;
+} */
+
+.markdown_table_container {
+  margin: 5px 0 5px 0;
+}
+
+.markdown_header_cell {
+  font-weight: bold !important;
 }
 
 .markdown_pre {
