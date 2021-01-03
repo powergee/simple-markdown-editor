@@ -19,6 +19,8 @@ const MarkdownViewer = props => {
         ],
 
         renderers: {
+            /* 각 element에 대한 렌더링 방식을 정의할 것. */
+            /* 아래에서 정의하지 않은 element는 ReactMarkdown의 기본 방식을 따름. */
             text: (props) => props.value.replace(/:[^:\s]*(?:::[^:\s]*)*:/gi, name => emoji.getUnicode(name)),
             break: (props) => <br></br>,
             paragraph: (props) => <p className="markdown_paragraph">{props.children}</p>,
@@ -39,22 +41,6 @@ const MarkdownViewer = props => {
                         {props.value}
                     </code>
                 </pre>),
-            // table: (props) => (
-            //     <table className="markdown_table">{props.children}</table>
-            // ),
-            // tableCell: (props) => {
-            //     let style = {
-            //         textAlign: props.align ? props.align : 'center',
-            //         padding: "6px 13px"
-            //     };
-
-            //     style.border = '1px solid #dfe2e5';
-            //     if (props.isHeader) {
-            //         style.background = '#f2f2f2'   
-            //     }
-
-            //     return <td style={style}>{props.children}</td>
-            // },
             table: (props) => (
                 <TableContainer className="markdown_table_container" component={OutlinedPaper}>
                     <Table>
